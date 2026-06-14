@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THE MANAK TIMES — Kumar Manak</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=VT323&family=Black+Han+Sans&family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── CSS Variables ── */
+    :root {
+      --ink: #1A1209;
+      --paper: #F0EAD6;
+      --yellow: #E8C84A;
+      --red: #C0392B;
+      --olive: #6B6B3A;
+      --grey: #9A9080;
+      --torn: #D4C9A8;
+    }
+
+    /* ── Global Reset ── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--ink);
+      color: var(--ink);
+      font-family: 'Special Elite', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Grain Overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.06'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: multiply;
+    }
+
+    a { text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ── Section header pattern ── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 4px solid currentColor;
+      padding-bottom: 0.5rem;
+    }
+
+    .section-eyebrow {
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      letter-spacing: 3px;
+      color: var(--red);
+    }
+
+    .section-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    /* ── Reveal animation ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── 1. STICKY NAV ── */
+    nav {
+      background: var(--ink);
+      border-bottom: 3px solid var(--yellow);
+      padding: 0.6rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'VT323', monospace;
+      color: var(--yellow);
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+    }
+
+    nav ul li a {
+      font-family: 'Oswald', sans-serif;
+      color: var(--paper);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav ul li a:hover {
+      color: var(--yellow);
+    }
+
+    /* ── 2. MASTHEAD / HERO ── */
+    #about {
+      background: var(--paper);
+      padding: 0 2rem 2rem;
+      position: relative;
+    }
+
+    /* Torn paper bottom edge */
+    #about::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 24px;
+      background: var(--ink);
+      clip-path: polygon(0% 100%, 2% 0%, 5% 80%, 8% 10%, 11% 70%, 14% 5%, 17% 85%, 20% 15%, 23% 75%, 26% 0%, 29% 90%, 32% 20%, 35% 65%, 38% 5%, 41% 80%, 44% 10%, 47% 70%, 50% 0%, 53% 85%, 56% 15%, 59% 75%, 62% 5%, 65% 80%, 68% 20%, 71% 65%, 74% 5%, 77% 90%, 80% 15%, 83% 75%, 86% 0%, 89% 85%, 92% 20%, 95% 70%, 98% 10%, 100% 80%, 100% 100%);
+    }
+
+    /* Top metadata bar */
+    .masthead-meta {
+      border-bottom: 4px double var(--ink);
+      padding: 0.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      font-family: 'VT323', monospace;
+    }
+
+    /* Flag area */
+    .masthead-flag {
+      text-align: center;
+      padding: 1.5rem 0 0.8rem;
+    }
+
+    .masthead-supertag {
+      font-family: 'VT323', monospace;
+      color: var(--olive);
+      letter-spacing: 3px;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .paper-name {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      line-height: 0.9;
+      letter-spacing: -2px;
+      color: var(--ink);
+      display: inline-block;
+      position: relative;
+    }
+
+    .paper-name::after {
+      content: 'EST. 2024';
+      position: absolute;
+      bottom: -4px;
+      right: 0;
+      font-family: 'Special Elite', serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      color: var(--red);
+    }
+
+    .masthead-subtitle {
+      font-family: 'Special Elite', serif;
+      font-size: 0.9rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--olive);
+      display: block;
+      margin-top: 0.8rem;
+    }
+
+    /* Rules */
+    .masthead-rule {
+      border: none;
+    }
+
+    .masthead-rule.thick {
+      border-top: 6px solid var(--ink);
+    }
+
+    .masthead-rule.thin {
+      border-top: 1px solid var(--ink);
+    }
+
+    .breaking-strip {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Anton', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin: 0.5rem 0;
+      padding: 0.4rem 1.2rem;
+      clip-path: polygon(0 0, 100% 0, 99% 100%, 1% 100%);
+    }
+
+    /* Hero grid */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      border-top: 3px solid var(--ink);
+    }
+
+    .hero-main {
+      grid-column: 1 / 3;
+      border-right: 2px solid var(--ink);
+      padding: 1.5rem 1.5rem 1.5rem 0;
+    }
+
+    .hero-kicker {
+      font-family: 'VT323', monospace;
+      color: var(--red);
+      letter-spacing: 3px;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-headline {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2rem, 5vw, 4rem);
+      text-transform: uppercase;
+      line-height: 1.05;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-headline .hl-name {
+      background: var(--yellow);
+      padding: 0 4px;
+    }
+
+    .hero-byline {
+      font-size: 0.78rem;
+      color: var(--olive);
+      border-top: 1px solid var(--grey);
+      border-bottom: 1px solid var(--grey);
+      padding: 0.3rem 0;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+    }
+
+    .hero-body {
+      columns: 2;
+      column-gap: 1.5rem;
+      column-rule: 1px solid var(--grey);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .hero-body p + p {
+      margin-top: 0.8rem;
+    }
+
+    .drop-cap::first-letter {
+      font-family: 'Anton', sans-serif;
+      font-size: 4rem;
+      float: left;
+      line-height: 0.75;
+      margin: 0.1rem 0.4rem 0 0;
+    }
+
+    /* Hero sidebar */
+    .hero-sidebar {
+      padding: 1.5rem 0 1.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .sidebar-box {
+      border: 2px solid var(--ink);
+      padding: 1rem;
+      position: relative;
+    }
+
+    .sidebar-box::before {
+      position: absolute;
+      top: -0.7rem;
+      left: 0.8rem;
+      background: var(--paper);
+      font-family: 'VT323', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      color: var(--red);
+      padding: 0 4px;
+    }
+
+    .box-vitals::before { content: '// FAST FACTS'; }
+    .box-status::before { content: '// CURRENT STATUS'; }
+    .box-quote::before { content: '// QUOTE'; }
+
+    .sidebar-box h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .sidebar-box ul li {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      padding-left: 1rem;
+      position: relative;
+    }
+
+    .sidebar-box ul li::before {
+      content: '▸ ';
+      color: var(--red);
+      position: absolute;
+      left: 0;
+    }
+
+    .sidebar-box p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .sidebar-box blockquote {
+      font-style: italic;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--olive);
+    }
+
+    /* ── Pinned photo card ── */
+    .pinned-photo {
+      position: relative;
+      align-self: flex-start;
+      margin-bottom: 0.2rem;
+    }
+
+    .pinned-photo::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #e0c9a0, #8B6914 40%, #5a4009);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 1px 2px rgba(255,220,100,0.4);
+      z-index: 2;
+    }
+
+    .pinned-photo img {
+      display: block;
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      object-position: center center;
+      filter: grayscale(100%) contrast(1.15) brightness(0.88);
+      border: 8px solid var(--paper);
+      box-shadow: 3px 4px 12px rgba(0,0,0,0.45), 0 0 0 1px rgba(0,0,0,0.15);
+      transform: rotate(-2.5deg);
+      transition: transform 0.3s ease;
+    }
+
+    .pinned-photo:hover img {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .photo-caption {
+      font-family: 'VT323', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      color: var(--olive);
+      text-align: center;
+      margin-top: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    /* ── 3. MARQUEE TICKER ── */
+    .ticker-strip {
+      background: var(--yellow);
+      padding: 0.5rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: marquee 18s linear infinite;
+      font-family: 'VT323', monospace;
+      font-size: 1.3rem;
+      letter-spacing: 4px;
+      color: var(--ink);
+      text-transform: uppercase;
+    }
+
+    @keyframes marquee {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── 4. SKILLS ── */
+    #skills {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3rem 2rem;
+    }
+
+    #skills .section-header {
+      border-color: var(--paper);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem;
+    }
+
+    .skill-col {
+      border: 2px solid var(--paper);
+      padding: 1.2rem;
+    }
+
+    .skill-col h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--yellow);
+      border-bottom: 1px solid var(--olive);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .tag {
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      letter-spacing: 1px;
+      border: 1px solid var(--grey);
+      color: var(--paper);
+      padding: 2px 8px;
+      cursor: default;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+
+    .tag:hover {
+      background: var(--yellow);
+      color: var(--ink);
+      border-color: var(--yellow);
+    }
+
+    /* ── 5. PROJECTS ── */
+    #projects {
+      background: var(--paper);
+      padding: 3rem 2rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    /* Project card */
+    .proj-card {
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      padding: 1.5rem;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .proj-card::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      transform: translateX(-50%) rotate(-0.5deg);
+      width: 60px;
+      height: 18px;
+      background: rgba(232, 200, 74, 0.6);
+    }
+
+    .proj-card:hover {
+      transform: rotate(0.5deg) translateY(-3px);
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .proj-card:nth-child(even):hover {
+      transform: rotate(-0.5deg) translateY(-3px);
+    }
+
+    .proj-num {
+      font-family: 'VT323', monospace;
+      font-size: 0.9rem;
+      color: var(--grey);
+      letter-spacing: 2px;
+    }
+
+    .proj-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin: 0.3rem 0 0.8rem;
+    }
+
+    .proj-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .stack-tag {
+      font-family: 'VT323', monospace;
+      font-size: 0.85rem;
+      background: var(--ink);
+      color: var(--paper);
+      padding: 1px 6px;
+      letter-spacing: 1px;
+    }
+
+    .proj-desc {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .proj-links {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      padding: 4px 14px;
+      border: 2px solid var(--ink);
+      color: var(--ink);
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .btn.red {
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .btn.red:hover {
+      background: var(--red);
+      color: var(--paper);
+    }
+
+    /* Featured card */
+    .proj-card.featured {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .proj-flag {
+      background: var(--red);
+      color: var(--paper);
+      font-family: 'Anton', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      padding: 2px 8px;
+      display: inline-block;
+      margin-bottom: 0.4rem;
+    }
+
+    .proj-card.featured .proj-right p + p {
+      margin-top: 0.8rem;
+    }
+
+    /* More repos card */
+    .card-more {
+      background: var(--ink);
+      border-color: var(--yellow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 220px;
+      text-align: center;
+      gap: 0.4rem;
+    }
+
+    .card-more::before {
+      background: rgba(232, 200, 74, 0.15);
+    }
+
+    .more-num {
+      font-family: 'Anton', sans-serif;
+      font-size: 3rem;
+      color: var(--yellow);
+    }
+
+    .more-label {
+      font-family: 'Special Elite', serif;
+      color: var(--paper);
+      font-size: 1rem;
+    }
+
+    .more-sub {
+      font-family: 'VT323', monospace;
+      color: var(--grey);
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .btn.yellow {
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    .btn.yellow:hover {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+
+    /* ── 6. EXPERIENCE ── */
+    #experience {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 3rem 2rem;
+    }
+
+    #experience .section-header {
+      border-color: var(--paper);
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--paper) 0,
+        var(--paper) 8px,
+        transparent 8px,
+        transparent 14px
+      );
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .timeline-item::before {
+      content: '◆';
+      position: absolute;
+      left: -2.2rem;
+      top: 0;
+      color: var(--red);
+      font-size: 1rem;
+    }
+
+    .timeline-date {
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      letter-spacing: 2px;
+      color: var(--red);
+    }
+
+    .timeline-role {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      color: var(--yellow);
+    }
+
+    .timeline-org {
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      color: var(--olive);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .timeline-body {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--paper);
+    }
+
+    /* ── 7. OPEN SOURCE ── */
+    #oss {
+      background: var(--paper);
+      padding: 3rem 2rem;
+    }
+
+    .oss-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .oss-card {
+      border: 1px solid var(--grey);
+      padding: 1.2rem;
+      background: rgba(240, 234, 214, 0.05);
+    }
+
+    .oss-card.featured-oss {
+      border-color: var(--yellow);
+    }
+
+    .badge {
+      font-family: 'VT323', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      padding: 2px 8px;
+      display: inline-block;
+      margin-bottom: 0.6rem;
+    }
+
+    .badge.merged {
+      background: var(--olive);
+      color: var(--paper);
+    }
+
+    .badge.contrib {
+      background: var(--red);
+      color: var(--paper);
+    }
+
+    .oss-repo {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      color: var(--yellow);
+    }
+
+    .oss-card:not(.oss-card.featured-oss) .oss-repo {
+      color: var(--ink);
+    }
+
+    #oss .oss-card .oss-repo {
+      color: var(--ink);
+    }
+
+    .oss-card.featured-oss .oss-repo {
+      color: var(--yellow) !important;
+    }
+
+    /* Let dark-bg cards keep yellow, but light section defaults to ink */
+    #oss .oss-card {
+      color: var(--ink);
+    }
+
+    #oss .oss-card .oss-repo {
+      color: var(--olive);
+    }
+
+    #oss .oss-card.featured-oss .oss-repo {
+      color: var(--red);
+    }
+
+    .oss-desc {
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+
+    .oss-lines {
+      font-family: 'VT323', monospace;
+      font-size: 0.9rem;
+      color: var(--grey);
+      margin-top: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    /* ── 8. HONOURS ── */
+    #honours {
+      background: var(--ink);
+      padding: 3rem 2rem;
+    }
+
+    #honours .section-header {
+      border-color: var(--paper);
+    }
+
+    #honours .section-title {
+      color: var(--paper);
+    }
+
+    .honours-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .honour-card {
+      flex: 1;
+      min-width: 200px;
+      border: 3px solid var(--yellow);
+      padding: 1.2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .honour-card::after {
+      content: '★';
+      position: absolute;
+      top: -0.9rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--ink);
+      padding: 0 6px;
+      color: var(--yellow);
+      font-size: 1.2rem;
+    }
+
+    .honour-card h3 {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      color: var(--yellow);
+      margin-bottom: 0.4rem;
+    }
+
+    .honour-card p {
+      font-size: 0.8rem;
+      color: var(--paper);
+      line-height: 1.5;
+    }
+
+    /* ── 9. OFF THE CLOCK ── */
+    #offclock {
+      background: var(--paper);
+      padding: 3rem 2rem;
+    }
+
+    .offclock-intro {
+      font-family: 'Special Elite', serif;
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 700px;
+      margin-bottom: 2.5rem;
+      color: var(--ink);
+    }
+
+    .offclock-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .vibe-card {
+      border: 3px solid var(--ink);
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .vibe-label {
+      position: absolute;
+      top: -14px;
+      left: 16px;
+      padding: 0 6px;
+    }
+
+    .vibe-label span {
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      letter-spacing: 3px;
+    }
+
+    .vibe-emoji {
+      font-family: 'Anton', sans-serif;
+      font-size: 3.5rem;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+
+    .vibe-heading {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.8rem;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .vibe-body {
+      font-size: 0.85rem;
+      font-family: 'Special Elite', serif;
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+
+    .vibe-divider {
+      border-top: 1px dashed;
+      padding-top: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    .vibe-footer {
+      font-family: 'VT323', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      margin-top: 0.4rem;
+      color: var(--grey);
+    }
+
+    /* Football card */
+    .vibe-card.football {
+      background: var(--paper);
+    }
+
+    .vibe-card.football .vibe-label {
+      background: var(--paper);
+    }
+
+    .vibe-card.football .vibe-label span {
+      color: #A50044;
+    }
+
+    .vibe-card.football .vibe-heading {
+      color: #A50044;
+    }
+
+    .vibe-card.football .vibe-divider {
+      border-color: var(--ink);
+    }
+
+    /* F1 card */
+    .vibe-card.f1 {
+      background: var(--ink);
+      color: var(--paper);
+    }
+
+    .vibe-card.f1 .vibe-label {
+      background: var(--ink);
+    }
+
+    .vibe-card.f1 .vibe-label span {
+      color: #CC1E4A;
+    }
+
+    .vibe-card.f1 .vibe-heading {
+      color: #CC1E4A;
+    }
+
+    .vibe-card.f1 .vibe-body {
+      color: var(--paper);
+    }
+
+    .vibe-card.f1 .vibe-divider {
+      border-color: var(--grey);
+    }
+
+    .vibe-card.f1 .vibe-sub {
+      color: #CC1E4A;
+    }
+
+    /* Music card */
+    .vibe-card.music {
+      background: var(--yellow);
+      color: var(--ink);
+    }
+
+    .vibe-card.music .vibe-label {
+      background: var(--yellow);
+    }
+
+    .vibe-card.music .vibe-label span {
+      color: var(--ink);
+    }
+
+    .vibe-card.music .vibe-heading {
+      color: var(--ink);
+    }
+
+    .vibe-card.music .vibe-divider {
+      border-color: var(--ink);
+    }
+
+    .album-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.2rem;
+    }
+
+    .album-chip {
+      font-family: 'VT323', monospace;
+      font-size: 0.95rem;
+      background: var(--ink);
+      color: var(--yellow);
+      padding: 2px 8px;
+      letter-spacing: 2px;
+    }
+
+    .vibe-tagline {
+      margin-top: 2rem;
+      border: 2px solid var(--ink);
+      padding: 1rem 1.5rem;
+      display: inline-block;
+      background: var(--ink);
+      color: var(--paper);
+      transform: rotate(-0.3deg);
+    }
+
+    .vibe-tagline span {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ── 10. CONTACT ── */
+    #contact {
+      background: var(--ink);
+      padding: 3rem 2rem 4rem;
+    }
+
+    .contact-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-eyebrow {
+      font-family: 'VT323', monospace;
+      color: var(--red);
+      letter-spacing: 4px;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+    }
+
+    .contact-heading {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      line-height: 0.9;
+      margin-bottom: 1.5rem;
+      color: var(--paper);
+    }
+
+    .contact-heading .highlight {
+      color: var(--yellow);
+      display: block;
+    }
+
+    .contact-body {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--grey);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .contact-links a {
+      font-family: 'VT323', monospace;
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+      color: var(--paper);
+      text-decoration: none;
+      border-bottom: 2px solid var(--yellow);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .contact-links a:hover {
+      color: var(--yellow);
+    }
+
+    /* ── 11. FOOTER ── */
+    footer {
+      background: var(--ink);
+      border-top: 4px solid var(--yellow);
+      padding: 1.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--grey);
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      letter-spacing: 2px;
+    }
+
+    footer .heart {
+      color: var(--red);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main {
+        grid-column: 1;
+        border-right: none;
+        border-bottom: 2px solid var(--ink);
+        padding: 1rem 0;
+      }
+
+      .hero-sidebar {
+        padding: 1rem 0;
+      }
+
+      .hero-body {
+        columns: 1;
+      }
+
+      .proj-card.featured {
+        grid-template-columns: 1fr;
+      }
+
+      nav ul {
+        gap: 1rem;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
+      }
+
+      .masthead-meta {
+        flex-direction: column;
+        gap: 0.2rem;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── 1. STICKY NAV ── -->
+  <nav>
+    <span class="nav-logo">MANAK.EXE</span>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Work</a></li>
+      <li><a href="#experience">XP</a></li>
+      <li><a href="#oss">OSS</a></li>
+      <li><a href="#offclock">Vibes</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── 2. MASTHEAD / HERO ── -->
+  <section id="about">
+    <!-- Top metadata bar -->
+    <div class="masthead-meta">
+      <span>VOL. II, NO. 4 ◆ PUNE / DELHI EDITION</span>
+      <span>B.TECH AI/ML — NEWTON SCHOOL OF TECHNOLOGY</span>
+      <span>JUNE 2026</span>
+    </div>
+
+    <!-- Flag -->
+    <div class="masthead-flag">
+      <span class="masthead-supertag">◆ THE OFFICIAL RECORD OF ◆</span>
+      <h1 class="paper-name">THE MANAK TIMES</h1>
+      <span class="masthead-subtitle">Turning Code Into Coffee Since 2024</span>
+    </div>
+
+    <!-- Rules + Breaking Strip -->
+    <hr class="masthead-rule thick" />
+    <div class="breaking-strip">BREAKING: LOCAL ENGINEER BUILDS MULTI-AGENT AI SYSTEMS WHILE STILL IN COLLEGE</div>
+    <hr class="masthead-rule thin" />
+
+    <!-- Hero grid -->
+    <div class="hero-grid">
+      <!-- Left: main story -->
+      <div class="hero-main">
+        <span class="hero-kicker">[ EXCLUSIVE PROFILE ]</span>
+        <h2 class="hero-headline"><span class="hl-name">KUMAR</span> MANAK:<br>THE AI ARCHITECT<br>FROM THE DORM ROOM</h2>
+        <p class="hero-byline">BY THE EDITORIAL DESK | AI/ML | BACKEND SYSTEMS | RAG PIPELINES</p>
+        <div class="hero-body">
+          <p class="drop-cap">Kumar Manak isn't waiting for graduation day. At 20, he's already building production-grade AI systems — multi-agent orchestrators, RAG pipelines, LLM-powered SaaS — while coding from Pune and pushing commits daily. Started in Node.js, pivoted hard to AI/ML in early 2026, and landed a founding-team AI internship at GV Labs Delhi before most people his age picked a major.</p>
+          <p>From Class X in Kota to a 7.6 GPA in B.Tech AI/ML at ADYPU, from 4 PRs merged in Hacktoberfest 2024 to the Super Contributor badge in 2025 — the trajectory is unmistakable. 54 public repos, 219+ GitHub contributions, and a merged PR in shikijs/shiki that the core team praised across seven review rounds. This is not a drill.</p>
+        </div>
+      </div>
+
+      <!-- Right: sidebar -->
+      <div class="hero-sidebar">
+
+        <!-- Pinned photo -->
+        <div class="pinned-photo">
+          <img src="kumar-manak.jpg" alt="Kumar Manak — Pune, night" />
+          <p class="photo-caption">◆ KUMAR MANAK — PUNE, 2025 ◆</p>
+        </div>
+
+        <div class="sidebar-box box-vitals">
+          <h3>Vitals</h3>
+          <ul>
+            <li>📍 Pune / Delhi, India</li>
+            <li>📧 manakkash20@gmail.com</li>
+            <li>🎓 B.Tech AI/ML — ADYPU</li>
+            <li>📊 GPA: 7.6 / 10</li>
+            <li>🏆 54 Public Repos</li>
+            <li>⚡ 219+ Contributions (2025)</li>
+          </ul>
+        </div>
+        <div class="sidebar-box box-status">
+          <h3>AI Intern</h3>
+          <p>Founding Team @ GV Labs Delhi. Building ready-to-ship AI apps from scratch. Jun 2026 – present.</p>
+        </div>
+        <div class="sidebar-box box-quote">
+          <blockquote>"Turning code into coffee — and coffee into systems that scale."</blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3. MARQUEE TICKER ── -->
+  <div class="ticker-strip">
+    <span class="ticker-inner">◆ FASTAPI ◆ LANGCHAIN ◆ CHROMADB ◆ LLAMA 3.1 ◆ GROQ ◆ NODE.JS ◆ POSTGRESQL ◆ REACT ◆ DOCKER ◆ MULTI-AGENT SYSTEMS ◆ RAG PIPELINES ◆ HACKTOBERFEST SUPER CONTRIBUTOR ◆ OPEN SOURCE ◆ ◆ FASTAPI ◆ LANGCHAIN ◆ CHROMADB ◆ LLAMA 3.1 ◆ GROQ ◆ NODE.JS ◆ POSTGRESQL ◆ REACT ◆ DOCKER ◆ MULTI-AGENT SYSTEMS ◆ RAG PIPELINES ◆ HACKTOBERFEST SUPER CONTRIBUTOR ◆ OPEN SOURCE ◆</span>
+  </div>
+
+  <!-- ── 4. SKILLS ── -->
+  <section id="skills" class="reveal">
+    <div class="section-header">
+      <span class="section-eyebrow">// SECTION 02</span>
+      <h2 class="section-title">Arsenal</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-col">
+        <h3>🤖 AI / ML</h3>
+        <div class="tags">
+          <span class="tag">Python</span>
+          <span class="tag">LangChain</span>
+          <span class="tag">ChromaDB</span>
+          <span class="tag">RAG</span>
+          <span class="tag">LLaMA 3.1</span>
+          <span class="tag">Groq</span>
+          <span class="tag">Multi-Agent</span>
+          <span class="tag">Sentence Transformers</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">NumPy</span>
+          <span class="tag">TF-IDF</span>
+          <span class="tag">Naive Bayes</span>
+          <span class="tag">Streamlit</span>
+        </div>
+      </div>
+      <div class="skill-col">
+        <h3>⚙️ Backend</h3>
+        <div class="tags">
+          <span class="tag">Node.js</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Express.js</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">MongoDB</span>
+          <span class="tag">Redis</span>
+          <span class="tag">Prisma ORM</span>
+          <span class="tag">JWT / RBAC</span>
+          <span class="tag">REST APIs</span>
+          <span class="tag">Socket.io</span>
+          <span class="tag">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-col">
+        <h3>🖥️ Frontend</h3>
+        <div class="tags">
+          <span class="tag">React</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+        </div>
+      </div>
+      <div class="skill-col">
+        <h3>🛠️ Tools &amp; Deploy</h3>
+        <div class="tags">
+          <span class="tag">Git / GitHub</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Render</span>
+          <span class="tag">Vercel</span>
+          <span class="tag">Netlify</span>
+          <span class="tag">Google Cloud</span>
+          <span class="tag">Pydantic</span>
+          <span class="tag">pytest</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5. PROJECTS ── -->
+  <section id="projects" class="reveal">
+    <div class="section-header">
+      <span class="section-eyebrow">// SECTION 03</span>
+      <h2 class="section-title">The Work</h2>
+    </div>
+    <div class="projects-grid">
+
+      <!-- PROJ 001 — Featured -->
+      <div class="proj-card featured">
+        <div class="proj-left">
+          <span class="proj-flag">◆ FLAGSHIP</span>
+          <div class="proj-num">PROJ — 001</div>
+          <h3 class="proj-title">Multi-Agent Customer Support System</h3>
+          <div class="proj-stack">
+            <span class="stack-tag">FastAPI</span>
+            <span class="stack-tag">ChromaDB</span>
+            <span class="stack-tag">LLaMA 3.1</span>
+            <span class="stack-tag">Groq</span>
+            <span class="stack-tag">Pydantic</span>
+            <span class="stack-tag">pytest</span>
+          </div>
+          <div class="proj-links">
+            <a href="https://lnkd.in/dfprRfzF" target="_blank" class="btn red">LIVE ↗</a>
+          </div>
+        </div>
+        <div class="proj-right">
+          <p class="proj-desc">Four specialized agents — Triage, Billing, Technical, and Escalation — coordinated by a central orchestrator. Complete RAG pipeline for context-aware responses, audit trail for every decision, and prompt injection guardrails baked in from day one. This isn't a demo. It's production-ready architecture from a sophomore.</p>
+          <p class="proj-desc">The system dynamically routes queries to the right specialist agent, maintains conversation context via ChromaDB semantic search, and flags edge cases for human escalation — all with zero hallucination leakage from the guardrails layer.</p>
+        </div>
+      </div>
+
+      <!-- PROJ 002 -->
+      <div class="proj-card">
+        <div class="proj-num">PROJ — 002</div>
+        <h3 class="proj-title">RAG Chatbot (mini-rag)</h3>
+        <div class="proj-stack">
+          <span class="stack-tag">LangChain</span>
+          <span class="stack-tag">ChromaDB</span>
+          <span class="stack-tag">LLaMA-3.1</span>
+          <span class="stack-tag">Streamlit</span>
+        </div>
+        <p class="proj-desc">Document-grounded Q&amp;A with real citations. Upload private PDFs, get semantically accurate answers with source attribution. No hallucinations, just retrieval.</p>
+        <div class="proj-links">
+          <a href="https://mini-rag-fvvht67tfwq6uruhgaqhyw.streamlit.app/" target="_blank" class="btn">LIVE ↗</a>
+          <a href="https://github.com/manak-sharma20/mini-rag" target="_blank" class="btn">GITHUB ↗</a>
+        </div>
+      </div>
+
+      <!-- PROJ 003 -->
+      <div class="proj-card">
+        <div class="proj-num">PROJ — 003</div>
+        <h3 class="proj-title">Multi-Tenant SaaS Backend</h3>
+        <div class="proj-stack">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">PostgreSQL</span>
+          <span class="stack-tag">Prisma</span>
+          <span class="stack-tag">JWT</span>
+        </div>
+        <p class="proj-desc">Full JWT auth, RBAC (Admin/Member roles), org-level multi-tenancy, admin invitation flow. Production-grade backend architecture from first principles.</p>
+        <div class="proj-links">
+          <a href="https://manak-sharma20.github.io/saas/login.html" target="_blank" class="btn">LIVE ↗</a>
+          <a href="https://github.com/manak-sharma20/saas" target="_blank" class="btn">GITHUB ↗</a>
+        </div>
+      </div>
+
+      <!-- PROJ 004 -->
+      <div class="proj-card">
+        <div class="proj-num">PROJ — 004</div>
+        <h3 class="proj-title">Where Is My Money</h3>
+        <div class="proj-stack">
+          <span class="stack-tag">Node.js</span>
+          <span class="stack-tag">REST APIs</span>
+          <span class="stack-tag">AI Analytics</span>
+        </div>
+        <p class="proj-desc">AI-driven financial analytics platform. Automated transaction monitoring with anomaly detection — built to flag fraud before you notice it.</p>
+        <div class="proj-links">
+          <a href="https://where-is-my-money-1.onrender.com/login" target="_blank" class="btn">LIVE ↗</a>
+        </div>
+      </div>
+
+      <!-- PROJ 005 -->
+      <div class="proj-card">
+        <div class="proj-num">PROJ — 005</div>
+        <h3 class="proj-title">Fraud SMS Detector</h3>
+        <div class="proj-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">TF-IDF</span>
+          <span class="stack-tag">Naive Bayes</span>
+          <span class="stack-tag">Streamlit</span>
+        </div>
+        <p class="proj-desc">NLP-based scam detection with unigram and bigram vectorisation. Catches phishing SMS before it catches your parents.</p>
+        <div class="proj-links">
+          <a href="https://manak-sharma20-fraud-sms-detector-app-yvhit9.streamlit.app/" target="_blank" class="btn">LIVE ↗</a>
+        </div>
+      </div>
+
+      <!-- PROJ 006 -->
+      <div class="proj-card">
+        <div class="proj-num">PROJ — 006</div>
+        <h3 class="proj-title">Student Performance Dashboard</h3>
+        <div class="proj-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Pandas</span>
+          <span class="stack-tag">Matplotlib</span>
+          <span class="stack-tag">Streamlit</span>
+        </div>
+        <p class="proj-desc">End-to-end EDA on real academic data with correlation analysis. Interactive dashboards that reveal patterns no spreadsheet can see.</p>
+        <div class="proj-links">
+          <a href="https://student-performance-analysis-nedbcqwtmwoy9scyx56cc4.streamlit.app/" target="_blank" class="btn">LIVE ↗</a>
+        </div>
+      </div>
+
+      <!-- PROJ 007 -->
+      <div class="proj-card">
+        <div class="proj-num">PROJ — 007</div>
+        <h3 class="proj-title">Campus Buddy</h3>
+        <div class="proj-stack">
+          <span class="stack-tag">Web App</span>
+        </div>
+        <p class="proj-desc">Your campus, simplified. A utility app for student life built to solve real friction at ADYPU.</p>
+        <div class="proj-links">
+          <a href="https://campus-buddy-v62r.vercel.app/home" target="_blank" class="btn">LIVE ↗</a>
+        </div>
+      </div>
+
+      <!-- +47 More -->
+      <div class="proj-card card-more">
+        <div class="more-num">+47</div>
+        <div class="more-label">More repos on GitHub</div>
+        <div class="more-sub">AUDIO MOOD ANALYZER · INTERVIEW PREP AI · PRICING DASHBOARD · AND MORE</div>
+        <a href="https://github.com/manak-sharma20" target="_blank" class="btn yellow">GITHUB ↗</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 6. EXPERIENCE ── -->
+  <section id="experience" class="reveal">
+    <div class="section-header">
+      <span class="section-eyebrow">// SECTION 04</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-date">JUN 2026 — PRESENT</div>
+        <div class="timeline-role">AI Intern &amp; Founding Team Member</div>
+        <div class="timeline-org">Gupta Vibhor &amp; Associates (GV Labs) — Delhi, India</div>
+        <p class="timeline-body">Building ready-to-ship AI applications from scratch as part of the founding team. Architecting multi-agent systems, RAG pipelines, and LLM integrations that go from concept to deployed product.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">MAY — AUG 2025</div>
+        <div class="timeline-role">Backend Developer Intern</div>
+        <div class="timeline-org">Newton School of Technology — Remote</div>
+        <p class="timeline-body">JWT auth systems, API integration, debugging production issues, peer code reviews, and database performance optimisation. Built the backend instincts that later fueled the AI pivot.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">JAN 2026</div>
+        <div class="timeline-role">Pivoted to AI/ML/RAG/LLMs</div>
+        <div class="timeline-org">Self-directed — Full Stack to AI</div>
+        <p class="timeline-body">Left comfort zone entirely. Went deep into LangChain, vector databases, LLM orchestration, and multi-agent architectures. Shipped five AI projects in six months.</p>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2024 — PRESENT</div>
+        <div class="timeline-role">B.Tech AI/ML Student</div>
+        <div class="timeline-org">Newton School of Technology (ADYPU) — Pune</div>
+        <p class="timeline-body">GPA 7.6/10. Building in parallel with academics. 54 public repos, 219+ contributions — the GitHub is the real transcript.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 7. OPEN SOURCE ── -->
+  <section id="oss" class="reveal">
+    <div class="section-header">
+      <span class="section-eyebrow">// SECTION 05</span>
+      <h2 class="section-title">Open Source</h2>
+    </div>
+    <div class="oss-grid">
+
+      <div class="oss-card featured-oss">
+        <span class="badge contrib">SUPER CONTRIBUTOR</span>
+        <div class="oss-repo" style="color: var(--red) !important;">Hacktoberfest 2025</div>
+        <p class="oss-desc">Achieved the highest tier — Super Contributor badge from DigitalOcean. 8 PRs merged across multiple open source repositories. Not a participant. A contributor.</p>
+        <div class="oss-lines">8 PRs MERGED ◆ DIGITALOCEAN BADGE</div>
+      </div>
+
+      <div class="oss-card">
+        <span class="badge merged">MERGED ✓</span>
+        <div class="oss-repo">shikijs / shiki</div>
+        <p class="oss-desc">feat(transformers): added zeroIndexed option to transformer API. TypeScript contribution with 7 review comments from core maintainers — and it got in.</p>
+        <div class="oss-lines">+69 / −15 LINES ◆ TYPESCRIPT</div>
+      </div>
+
+      <div class="oss-card">
+        <span class="badge merged">MERGED ✓</span>
+        <div class="oss-repo">Ipshita29 / LinkRead</div>
+        <p class="oss-desc">Full AI integration + complete UI overhaul across 5 phases. MERN stack. Largest single contribution — transformed the product.</p>
+        <div class="oss-lines">+2,358 / −397 LINES ◆ MERN</div>
+      </div>
+
+      <div class="oss-card">
+        <span class="badge merged">MERGED ✓</span>
+        <div class="oss-repo">mongoose</div>
+        <p class="oss-desc">perf(query): skipped recursive casting for simple equality filters — a surgical performance fix that makes every equality query faster.</p>
+        <div class="oss-lines">PERFORMANCE ◆ QUERY LAYER</div>
+      </div>
+
+      <div class="oss-card">
+        <span class="badge contrib">CONTRIBUTOR</span>
+        <div class="oss-repo">Hacktoberfest 2024</div>
+        <p class="oss-desc">4 PRs merged in the first Hacktoberfest. The beginning of a consistent open source practice that only accelerated from here.</p>
+        <div class="oss-lines">4 PRs MERGED</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 8. HONOURS ── -->
+  <section id="honours" class="reveal">
+    <div class="section-header">
+      <span class="section-eyebrow">// SECTION 06</span>
+      <h2 class="section-title">Honours</h2>
+    </div>
+    <div class="honours-row">
+
+      <div class="honour-card">
+        <h3>Super Contributor</h3>
+        <p>Hacktoberfest 2025 / DigitalOcean — Highest tier / 8 PRs merged</p>
+      </div>
+
+      <div class="honour-card">
+        <h3>8th Place</h3>
+        <p>Nirmaan Frontend Hackathon / Competitive ranking / among top builders</p>
+      </div>
+
+      <div class="honour-card">
+        <h3>National Rep</h3>
+        <p>Table Tennis Tournaments / Represented institute at / national level</p>
+      </div>
+
+      <div class="honour-card">
+        <h3>219+ Contribs</h3>
+        <p>GitHub 2025 / 54 public repos / Consistent, daily builder</p>
+      </div>
+
+      <div class="honour-card">
+        <h3>Hacktoberfest</h3>
+        <p>2024 Edition / 4 PRs merged / Early open source days</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── 9. OFF THE CLOCK ── -->
+  <section id="offclock" class="reveal">
+    <div class="section-header">
+      <span class="section-eyebrow">// SECTION 07</span>
+      <h2 class="section-title">Off The Clock</h2>
+    </div>
+    <p class="offclock-intro">The man behind the commits. Not everything runs on FastAPI — some things run on goals, overtakes, and 808s.</p>
+
+    <div class="offclock-grid">
+
+      <!-- Football -->
+      <div class="vibe-card football">
+        <div class="vibe-label" style="background: var(--paper);">
+          <span style="color: #A50044;">// FOOTBALL</span>
+        </div>
+        <div class="vibe-emoji">⚽</div>
+        <div class="vibe-heading" style="color: #A50044;">FC BARCELONA</div>
+        <p class="vibe-body">Blaugrana til the end. Tiki-taka in the veins, Camp Nou in the dreams. The kind of football that feels like poetry — same energy as a clean codebase that just works.</p>
+        <div class="vibe-divider" style="border-color: var(--ink);">
+          <p style="font-family: 'VT323', monospace; font-size: 0.95rem; letter-spacing: 1px; color: var(--olive);">+ SPAIN NATIONAL TEAM — LA ROJA, EUROS, WORLD CUPS</p>
+        </div>
+        <div class="vibe-footer">MÁS QUE UN CLUB</div>
+      </div>
+
+      <!-- F1 -->
+      <div class="vibe-card f1">
+        <div class="vibe-label" style="background: var(--ink);">
+          <span style="color: #CC1E4A;">// FORMULA ONE</span>
+        </div>
+        <div class="vibe-emoji">🏎️</div>
+        <div class="vibe-heading" style="color: #CC1E4A;">RED BULL RACING</div>
+        <p class="vibe-body" style="color: var(--paper);">Milliseconds matter. Marginal gains compound. There's a reason the best team in F1 and the best engineers in tech think the same way — optimise everything, trust the data, go flat out.</p>
+        <div class="vibe-divider" style="border-color: var(--grey);">
+          <p style="font-family: 'VT323', monospace; font-size: 0.95rem; letter-spacing: 1px; color: #CC1E4A;">GIVE HER THE BEANS 🫘</p>
+        </div>
+        <div class="vibe-footer">MAX VERSTAPPEN ERA. ENOUGH SAID.</div>
+      </div>
+
+      <!-- Music -->
+      <div class="vibe-card music">
+        <div class="vibe-label" style="background: var(--yellow);">
+          <span style="color: var(--ink);">// MUSIC</span>
+        </div>
+        <div class="vibe-emoji">🎧</div>
+        <div class="vibe-heading" style="color: var(--ink);">DRINKS KANYE IN FREE TIME</div>
+        <p class="vibe-body" style="color: var(--ink);">Not just a listener — a student. The architecture of a Kanye album is the architecture of a well-designed system: layers, callbacks, motifs that hit different on every replay. <em>My Beautiful Dark Twisted Fantasy</em> on loop while shipping code is not a personality trait. It's a workflow.</p>
+        <div class="vibe-divider" style="border-color: var(--ink);">
+          <div class="album-chips">
+            <span class="album-chip">COLLEGE DROPOUT</span>
+            <span class="album-chip">MBDTF</span>
+            <span class="album-chip">YEEZUS</span>
+            <span class="album-chip">DONDA</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="vibe-tagline">
+      <span>BARCA WIN. RED BULL ON TOP. YE ON REPEAT. CODE SHIPS. ◆ THIS IS THE WAY.</span>
+    </div>
+  </section>
+
+  <!-- ── 10. CONTACT ── -->
+  <section id="contact" class="reveal">
+    <div class="contact-inner">
+      <p class="contact-eyebrow">// FINAL EDITION</p>
+      <h2 class="contact-heading">
+        LET'S BUILD
+        <span class="highlight">SOMETHING</span>
+        REAL.
+      </h2>
+      <p class="contact-body">AI systems, backend architecture, open source — if it ships, it counts. Drop a line, open a PR, or just say what you're working on.</p>
+      <div class="contact-links">
+        <a href="mailto:manakkash20@gmail.com">EMAIL ↗</a>
+        <a href="https://linkedin.com/in/kumar-manak-064bbb361" target="_blank">LINKEDIN ↗</a>
+        <a href="https://github.com/manak-sharma20" target="_blank">GITHUB ↗</a>
+        <a href="tel:+919142956591">CALL ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 11. FOOTER ── -->
+  <footer>
+    <span>© 2026 KUMAR MANAK — ALL RIGHTS RESERVED</span>
+    <span>BUILT WITH <span class="heart">♥</span> &amp; STRONG COFFEE</span>
+    <span>PUNE / DELHI — INDIA</span>
+  </footer>
+
+  <script>
+    // ── Scroll reveal ──
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ── Glitch effect on masthead title ──
+    const paperName = document.querySelector('.paper-name');
+    setInterval(() => {
+      paperName.style.textShadow = `${(Math.random()-0.5)*4}px 0 #C0392B, ${(Math.random()-0.5)*4}px 0 #E8C84A`;
+      setTimeout(() => {
+        paperName.style.textShadow = 'none';
+      }, 100);
+    }, 4000);
+  </script>
+</body>
+</html>
