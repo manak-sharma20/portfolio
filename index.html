@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Special+Elite&family=VT323&family=Black+Han+Sans&family=Oswald:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
     /* ── CSS Variables ── */
     :root {
@@ -923,10 +924,31 @@
     }
 
     .vibe-emoji {
-      font-family: 'Anton', sans-serif;
       font-size: 3.5rem;
       line-height: 1;
       margin-bottom: 0.3rem;
+    }
+
+    .vibe-emoji i {
+      font-size: 3.5rem;
+    }
+
+    .skill-col h3 i {
+      margin-right: 0.4rem;
+      font-size: 1.1rem;
+      vertical-align: middle;
+    }
+
+    .box-vitals li i {
+      width: 1.1rem;
+      text-align: center;
+      margin-right: 0.35rem;
+      color: var(--yellow);
+    }
+
+    footer .heart i {
+      font-size: 0.85rem;
+      vertical-align: middle;
     }
 
     .vibe-heading {
@@ -1251,12 +1273,12 @@
         <div class="sidebar-box box-vitals">
           <h3>Vitals</h3>
           <ul>
-            <li>📍 Pune / Delhi, India</li>
-            <li>📧 manakkash20@gmail.com</li>
-            <li>🎓 B.Tech AI/ML — ADYPU</li>
-            <li>📊 GPA: 7.6 / 10</li>
-            <li>🏆 54 Public Repos</li>
-            <li>⚡ 219+ Contributions (2025)</li>
+            <li><i class="fa-solid fa-location-dot"></i> Pune / Delhi, India</li>
+            <li><i class="fa-solid fa-envelope"></i> manakkash20@gmail.com</li>
+            <li><i class="fa-solid fa-graduation-cap"></i> B.Tech AI/ML — ADYPU</li>
+            <li><i class="fa-solid fa-chart-bar"></i> GPA: 7.6 / 10</li>
+            <li><i class="fa-solid fa-trophy"></i> 54 Public Repos</li>
+            <li><i class="fa-solid fa-bolt"></i> 219+ Contributions (2025)</li>
           </ul>
         </div>
         <div class="sidebar-box box-status">
@@ -1283,7 +1305,7 @@
     </div>
     <div class="skills-grid">
       <div class="skill-col">
-        <h3>🤖 AI / ML</h3>
+        <h3><i class="fa-solid fa-robot"></i> AI / ML</h3>
         <div class="tags">
           <span class="tag">Python</span>
           <span class="tag">LangChain</span>
@@ -1301,7 +1323,7 @@
         </div>
       </div>
       <div class="skill-col">
-        <h3>⚙️ Backend</h3>
+        <h3><i class="fa-solid fa-server"></i> Backend</h3>
         <div class="tags">
           <span class="tag">Node.js</span>
           <span class="tag">FastAPI</span>
@@ -1317,7 +1339,7 @@
         </div>
       </div>
       <div class="skill-col">
-        <h3>🖥️ Frontend</h3>
+        <h3><i class="fa-solid fa-desktop"></i> Frontend</h3>
         <div class="tags">
           <span class="tag">React</span>
           <span class="tag">TypeScript</span>
@@ -1327,7 +1349,7 @@
         </div>
       </div>
       <div class="skill-col">
-        <h3>🛠️ Tools &amp; Deploy</h3>
+        <h3><i class="fa-solid fa-screwdriver-wrench"></i> Tools &amp; Deploy</h3>
         <div class="tags">
           <span class="tag">Git / GitHub</span>
           <span class="tag">Docker</span>
@@ -1615,7 +1637,7 @@
         <div class="vibe-label" style="background: var(--paper);">
           <span style="color: #A50044;">// FOOTBALL</span>
         </div>
-        <div class="vibe-emoji">⚽</div>
+        <div class="vibe-emoji"><i class="fa-solid fa-futbol"></i></div>
         <div class="vibe-heading" style="color: #A50044;">FC BARCELONA</div>
         <p class="vibe-body">Blaugrana til the end. Tiki-taka in the veins, Camp Nou in the dreams. The kind of football that feels like poetry — same energy as a clean codebase that just works.</p>
         <div class="vibe-divider" style="border-color: var(--ink);">
@@ -1629,11 +1651,11 @@
         <div class="vibe-label" style="background: var(--ink);">
           <span style="color: #CC1E4A;">// FORMULA ONE</span>
         </div>
-        <div class="vibe-emoji">🏎️</div>
+        <div class="vibe-emoji"><i class="fa-solid fa-flag-checkered"></i></div>
         <div class="vibe-heading" style="color: #CC1E4A;">RED BULL RACING</div>
         <p class="vibe-body" style="color: var(--paper);">Milliseconds matter. Marginal gains compound. There's a reason the best team in F1 and the best engineers in tech think the same way — optimise everything, trust the data, go flat out.</p>
         <div class="vibe-divider" style="border-color: var(--grey);">
-          <p style="font-family: 'VT323', monospace; font-size: 0.95rem; letter-spacing: 1px; color: #CC1E4A;">GIVE HER THE BEANS 🫘</p>
+          <p style="font-family: 'VT323', monospace; font-size: 0.95rem; letter-spacing: 1px; color: #CC1E4A;">GIVE HER THE BEANS</p>
         </div>
         <div class="vibe-footer">MAX VERSTAPPEN ERA. ENOUGH SAID.</div>
       </div>
@@ -1643,7 +1665,7 @@
         <div class="vibe-label" style="background: var(--yellow);">
           <span style="color: var(--ink);">// MUSIC</span>
         </div>
-        <div class="vibe-emoji">🎧</div>
+        <div class="vibe-emoji"><i class="fa-solid fa-headphones"></i></div>
         <div class="vibe-heading" style="color: var(--ink);">DRINKS KANYE IN FREE TIME</div>
         <p class="vibe-body" style="color: var(--ink);">Not just a listener — a student. The architecture of a Kanye album is the architecture of a well-designed system: layers, callbacks, motifs that hit different on every replay. <em>My Beautiful Dark Twisted Fantasy</em> on loop while shipping code is not a personality trait. It's a workflow.</p>
         <div class="vibe-divider" style="border-color: var(--ink);">
@@ -1685,7 +1707,7 @@
   <!-- ── 11. FOOTER ── -->
   <footer>
     <span>© 2026 KUMAR MANAK — ALL RIGHTS RESERVED</span>
-    <span>BUILT WITH <span class="heart">♥</span> &amp; STRONG COFFEE</span>
+    <span>BUILT WITH <span class="heart"><i class="fa-solid fa-heart"></i></span> &amp; STRONG COFFEE</span>
     <span>PUNE / DELHI — INDIA</span>
   </footer>
 
